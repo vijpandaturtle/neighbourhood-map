@@ -20,3 +20,7 @@ html,body {
 .search-bar {
   padding-left : 20px;
 }
+
+.filter {
+  margin-left: 20px;
+}
