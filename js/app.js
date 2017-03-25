@@ -1,5 +1,6 @@
 var map;
 var infowindow;
+var latlngbounds;
 var markers =[];
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -17,7 +18,7 @@ var locations = [
       ];
 
 infowindow = new google.maps.InfoWindow();
-var latlngbounds = new google.maps.LatLngBounds();
+latlngbounds = new google.maps.LatLngBounds();
 
 for(i=0; i<locations.length; i++) {
 
