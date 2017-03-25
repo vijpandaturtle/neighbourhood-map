@@ -9,7 +9,6 @@
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/knockout-3.4.2.js"></script>
-  <script src="js/app.js"></script>
 </head>
 <title>Neighbourhood Map</title>
 <body>
@@ -20,16 +19,17 @@
  <a class="brand" href="#">My Neighbourhood Map</a>
   <form class="navbar-search pull-left search-bar">
   <input type="text" class="search-query" placeholder="Search For Someplace Fun">
-  <ul class="result search-ac" data-bind="foreach : {data : title}">
-    <li data-bind="text : $data">Search Result One</li>
+  <ul class="search-ac" data-bind="foreach : Locations">
+    <li data-bind="text : title">Search Result One</li>
+    <hr>  
   </ul>
   </form>
   <button class=" btn filter">Filter</button>
-
   </div>
 </div>
 </div>
 <div id="map"></div>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMrECZJcFbeOtbvyVyPKeJlT27hEwRBz0&callback=initMap"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
