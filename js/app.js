@@ -7,7 +7,6 @@ var Locations = [
         {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
 ];
 
-
 var map;
 var infowindow;
 var latlngbounds;
@@ -15,7 +14,7 @@ var markers =[];
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
   center : {lat: 40.7413549, lng: -73.9980244},
-  zoom: 13
+  zoom: 13,
 });
 
 infowindow = new google.maps.InfoWindow();
@@ -26,7 +25,6 @@ for(i=0; i<Locations.length; i++) {
   var position = Locations[i].location;
   var title = Locations[i].title;
 
-  var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 
   var marker = new google.maps.Marker({
   position: position,
@@ -53,6 +51,20 @@ for(i=0; i<Locations.length; i++) {
  }
  map.fitBounds(latlngbounds);
 }
-
-
 }
+
+var Place = function(data) {
+ this.loc = ko.Observable(Locations.location);
+ this.name = ko.Observable(Locations.title);
+}
+
+
+var ViewModel = function() {
+var self = this;
+this.locationList = ko.ObservableArray([]);
+
+Locations.forEach(function(listItem) {
+  self.locationList.push(new Place(listItem));
+});
+}
+// ko.applyBindings(new ViewModel());
