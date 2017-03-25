@@ -20,12 +20,9 @@
  <a class="brand" href="#">My Neighbourhood Map</a>
   <form class="navbar-search pull-left search-bar">
   <input type="text" class="search-query" placeholder="Search For Someplace Fun">
-  <!--<ul class="result">
-    <li>Search Result One</li>
-    <li>Search Result Two</li>
-    <li>Search Result Three</li>
-    <li>Search Result Four</li>
-  </ul>-->
+  <ul class="result search-ac" data-bind="foreach : {data : title}">
+    <li data-bind="text : $data">Search Result One</li>
+  </ul>
   </form>
   <button class=" btn filter">Filter</button>
 

@@ -67,4 +67,4 @@ Locations.forEach(function(listItem) {
   self.locationList.push(new Place(listItem));
 });
 }
-// ko.applyBindings(new ViewModel());
+ko.applyBindings(new ViewModel());
