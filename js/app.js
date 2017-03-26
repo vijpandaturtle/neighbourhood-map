@@ -54,24 +54,15 @@ for(i=0; i<Locations.length; i++) {
 }
 
 var Place = function(data) {
- this.name = ko.observable(data.name);
+/* this.name = ko.observable(data.name);
  this.address = ko.observable(data.address);
  this.phone = ko.observable(data.phone);
  this.latitude = data.location.lat;
- this.longitude = data.location.lng;
+ this.longitude = data.location.lng; */
 }
 
 
 var ViewModel = function() {
-var self = this;
-this.locationList = ko.observableArray([]);
 
-Locations.forEach(function(listItem) {
-  self.locationList.push(new Place(listItem));
-});
-
-this.searchRender = function() {
- document.querySelectorAll('.search-ac').style.display = "block";
-}
 }
 ko.applyBindings(new ViewModel());

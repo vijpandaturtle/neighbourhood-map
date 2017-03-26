@@ -15,16 +15,10 @@
   <div class="navbar navbar-inverse">
 <div class="navbar-inner">
 <div class="container">
-
  <a class="brand" href="#">My Neighbourhood Map</a>
-  <form class="navbar-search pull-left search-bar filter-form" data-bind="click : searchRender">
-  <input type="text" class="search-query" placeholder="Search For Someplace Fun">
-  <ul class="search-ac" data-bind="foreach : Locations">
-    <li data-bind="text : title">Search Result One</li>
-    <hr>
-  </ul>
-  </form>
-  <button class=" btn filter">Filter</button>
+  <p class="input-option"><input data-bind="textInput: Locations.title" placeholder="Search For Someplace Fun"></p>
+<!--  <p><select data-bind="options: Locations,optionsText : 'title'"></select></p>-->
+<button class=" btn filter">Filter</button>
   </div>
 </div>
 </div>

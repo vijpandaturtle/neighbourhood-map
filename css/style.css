@@ -23,10 +23,14 @@ html,body {
 
 .filter {
   margin-left: 20px;
+  display: inline;
+}
+.input-option {
+  display: inline;
 }
 
-.search-ac {
-  display: none;
+/* .search-ac {
+  display: block;
   list-style-type: none;
   padding: 20px 0px 5px 5px;
   position: absolute;
