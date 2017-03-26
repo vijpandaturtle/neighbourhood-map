@@ -26,9 +26,9 @@ html,body {
 }
 
 .search-ac {
-  /* display: none;*/
+  display: none;
   list-style-type: none;
-  padding: 20px 0px 5px 5px; 
+  padding: 20px 0px 5px 5px;
   position: absolute;
   top: 35px;
   left: 0;

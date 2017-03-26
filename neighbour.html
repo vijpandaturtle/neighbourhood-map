@@ -17,11 +17,11 @@
 <div class="container">
 
  <a class="brand" href="#">My Neighbourhood Map</a>
-  <form class="navbar-search pull-left search-bar">
+  <form class="navbar-search pull-left search-bar filter-form" data-bind="click : searchRender">
   <input type="text" class="search-query" placeholder="Search For Someplace Fun">
   <ul class="search-ac" data-bind="foreach : Locations">
     <li data-bind="text : title">Search Result One</li>
-    <hr>  
+    <hr>
   </ul>
   </form>
   <button class=" btn filter">Filter</button>

@@ -70,8 +70,8 @@ Locations.forEach(function(listItem) {
   self.locationList.push(new Place(listItem));
 });
 
-this.search_render = function() {
-  
+this.searchRender = function() {
+ document.querySelectorAll('.search-ac').style.display = "block";
 }
 }
 ko.applyBindings(new ViewModel());
