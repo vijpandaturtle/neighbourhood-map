@@ -63,6 +63,19 @@ var Place = function(data) {
 
 
 var ViewModel = function() {
+  var self = this;
+  this.locations = ko.observableArray([]);
+  this.query = ko.observable("");
 
+  this.search = function(value) {
+      self.Locations.removeAll();
+
+      for(var x in Locations) {
+        if(Locations[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+          self.beers.push(beers[x]);
+        }
+      }
+    }
 }
+// ViewModel.query.subscribe(ViewModel.search);
 ko.applyBindings(new ViewModel());
