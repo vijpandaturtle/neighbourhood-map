@@ -54,28 +54,30 @@ for(i=0; i<Locations.length; i++) {
 }
 
 var Place = function(data) {
-/* this.name = ko.observable(data.name);
+ this.name = ko.observable(data.name);
  this.address = ko.observable(data.address);
  this.phone = ko.observable(data.phone);
  this.latitude = data.location.lat;
- this.longitude = data.location.lng; */
+ this.longitude = data.location.lng; 
 }
 
 
 var ViewModel = function() {
   var self = this;
-  this.locations = ko.observableArray([]);
+  this.locs = ko.observableArray([]);
   this.query = ko.observable("");
 
-  this.search = function(value) {
-      self.Locations.removeAll();
 
-      for(var x in Locations) {
-        if(Locations[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-          self.beers.push(beers[x]);
-        }
+
+ this.search = function(value) {
+      self.locs.removeAll();
+
+    for(var x in Locations) {
+      if(Locations[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+          self.Locations.push(locations[x]);
       }
-    }
+     }
+  }
 }
 // ViewModel.query.subscribe(ViewModel.search);
 ko.applyBindings(new ViewModel());
