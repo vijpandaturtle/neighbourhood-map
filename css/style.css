@@ -25,7 +25,6 @@ html,body {
 width: 100%;
 }
 
-
-/*.input-option {
-  display: inline;
-}*/
+ul {
+  list-style-type: none;
+}

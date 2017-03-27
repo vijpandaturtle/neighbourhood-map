@@ -58,23 +58,22 @@ var Place = function(data) {
  this.address = ko.observable(data.address);
  this.phone = ko.observable(data.phone);
  this.latitude = data.location.lat;
- this.longitude = data.location.lng; 
+ this.longitude = data.location.lng;
 }
 
 
 var ViewModel = function() {
   var self = this;
-  this.locs = ko.observableArray([]);
+  this.locs = ko.observableArray(Locations);
   this.query = ko.observable("");
-
-
+  this.currentLocation = ko.observable("")
 
  this.search = function(value) {
       self.locs.removeAll();
 
-    for(var x in Locations) {
+    for(var x in locs) {
       if(Locations[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-          self.Locations.push(locations[x]);
+          self.locs.push(Locations[x]);
       }
      }
   }
