@@ -10,6 +10,14 @@ function initMap() {
 infowindow = new google.maps.InfoWindow();
 }
 
+//function AjaxRequest() {
+  //var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json';
+
+  //$ajax({
+
+  //});
+//}
+
 //This data is taken from the google maps apis course by Udacity.
 //This is the model containing all the data in the MVVM pattern.
 var Locations = [
