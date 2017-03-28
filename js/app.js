@@ -86,7 +86,7 @@ var ViewModel = function() {
           self.locs.push(Locations[x]);
         }
      }
-   }
+  }
 
  this.currentShow = function(selectedLoc) {
   selectedLoc.selected();
