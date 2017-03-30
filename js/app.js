@@ -77,8 +77,6 @@ var Place = function(data) {
     this.marker.setIcon(newMarker);
     this.marker.setVisible(True);
   }
-
-
 }
 
 
@@ -86,15 +84,17 @@ var ViewModel = function() {
   var self = this;
   this.locs = ko.observableArray(Locations);
   this.currentLocation = ko.observable("");
-  this.query = function(value) {
-      self.locs.removeAll();
+  this.query = ko.observable("");
 
-    for(var x in locs) {
-      if(Locations[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-          self.locs.push(Locations[x]);
-        }
-     }
-  }
+  this.filterLocations = ko.computed(function() {
+    var query = self.query().toLowerCase();
+    console.log(query);
+    if (!query) {
+      return self.locs();
+    } else {
+      return [];
+    }
+  });
 
  this.currentShow = function(selectedLoc) {
   selectedLoc.selected();
@@ -104,5 +104,4 @@ var ViewModel = function() {
 
 }
 
-// ViewModel.query.subscribe(ViewModel.search);
 ko.applyBindings(new ViewModel());

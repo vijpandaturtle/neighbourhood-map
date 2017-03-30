@@ -36,11 +36,11 @@
               <h2 class="modal-title" id="myModalLabel">Locations
               </h2>
               <p class="input-option">
-                <input placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup',textInput = currentLocation" autocomplete="off">
+                <input placeholder="Search…" type="search" data-bind="textInput = query" autocomplete="off">
               </p>
             </div>
             <div class="modal-body">
-             <ul class="search-ac" data-bind="foreach:Locations">
+             <ul class="search-ac" data-bind="foreach:filterLocations">
                 <li data-bind="text : title"></li>
                 <hr>
               </ul>
