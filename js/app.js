@@ -35,8 +35,8 @@ var Place = function(data) {
  this.name = ko.observable(data.title);
  this.address = ko.observable(data.address);
  this.phone = ko.observable(data.phone);
- this.latitude = data.location.lat;
- this.longitude = data.location.lng;
+ this.latitude = ko.observable(data.location.lat);
+ this.longitude = ko.observable(data.location.lng);
 
  var originalMarker = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "FE7569",
     new google.maps.Size(21, 34),
@@ -96,14 +96,11 @@ var ViewModel = function() {
       console.log(query);
       if (!query) {
         return self.locs();
-      } else {
-        return [];
       } else  {
         return ko.utils.arrayFilter(self.locs(),function(locs) {
           return ko.utils.stringStartsWith(locs.name().toLowerCase(), query);
         });
       }
-    });
     },this);
 
   this.setCurrentLocation = function(clickedLoc) {
