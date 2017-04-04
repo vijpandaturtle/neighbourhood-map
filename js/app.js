@@ -31,7 +31,7 @@ var Locations = [
 
 // This represents the view in the MVVM pattern.
 var Place = function(data) {
-  var self = this;
+ var self = this;
  this.name = ko.observable(data.title);
  this.address = ko.observable(data.address);
  this.phone = ko.observable(data.phone);
