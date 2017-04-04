@@ -20,7 +20,7 @@ infowindow = new google.maps.InfoWindow();
 
 //This data is taken from the google maps apis course by Udacity.
 //This is the model containing all the data in the MVVM pattern.
-var Locations = [
+var locations = [
         {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
         {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
         {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
@@ -31,59 +31,64 @@ var Locations = [
 
 // This represents the view in the MVVM pattern.
 var Place = function(data) {
-  var self = this;
+ var self = this;
  this.name = ko.observable(data.title);
- this.address = ko.observable(data.address);
- this.phone = ko.observable(data.phone);
- this.latitude = data.location.lat;
- this.longitude = data.location.lng;
+ //this.address = ko.observable(data.address);
+ //this.phone = ko.observable(data.phone);
+ this.latitude = ko.observable(data.location.lat);
+ this.longitude = ko.observable(data.location.lng);
 
- var originalMarker = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "FE7569",
-    new google.maps.Size(21, 34),
-    new google.maps.Point(0,0),
-    new google.maps.Point(10, 34));
+  var originalMarker = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "FE7569",
+     new google.maps.Size(21, 34),
+     new google.maps.Point(0,0),
+     new google.maps.Point(10, 34));
 
- var newMarker = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "001188",
-    new google.maps.Size(21, 34),
-    new google.maps.Point(0,0),
-    new google.maps.Point(10, 34));
+  var newMarker = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "001188",
+     new google.maps.Size(21, 34),
+     new google.maps.Point(0,0),
+     new google.maps.Point(10, 34));
 
-  this.marker = new google.maps.Marker({
+ this.marker = new google.maps.Marker({
     position: new google.maps.LatLng(this.latitude,this.longitude),
     map: map,
-    title: title,
+    title: this.name,
     icon: originalMarker,
     animation : google.maps.Animation.DROP,
    });
 
-   this.marker.addListener('click', function() {
+ this.marker.addListener('click', function() {
     self.openInfo();
     self.bounce();
     });
 
-  this.openInfo = function() {
+ this.openInfo = function() {
      infowindow.open(map,this.marker);
      infowindow.setContent('<div>' + marker.title + '</div>');
     }
 
-  this.bounce = function() {
+ this.bounce = function() {
     this.marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
     this.marker.setAnimation(null);
   },5000);
   }
 
-  this.selected = function() {
+ this.selected = function() {
     this.marker.setIcon(newMarker);
-    this.marker.setVisible(True);
+    this.marker.setVisible(true);
   }
-}
 
+}
 
 var ViewModel = function() {
   var self = this;
-  this.locs = ko.observableArray(Locations);
-  this.currentLocation = ko.observable("");
+  this.locs = ko.observableArray([]);
+
+  locations.forEach(function(locItem) {
+    self.locs.push(new Place(locItem));
+  });
+
+  this.currentLocation = ko.observable(this.locs()[0]);
   this.query = ko.observable("");
 
   this.filterLocations = ko.computed(function() {
@@ -91,17 +96,26 @@ var ViewModel = function() {
     console.log(query);
     if (!query) {
       return self.locs();
-    } else {
-      return [];
+    } else  {
+      return ko.utils.arrayFilter(self.locs(),function(locs) {
+        return ko.utils.stringStartsWith(locs.name().toLowerCase(), query);
+      });
     }
-  });
+  },this);
+
+  this.setCurrentLocation = function(clickedLoc) {
+    self.currentLocation(clickedLoc);
+  }
 
  this.currentShow = function(selectedLoc) {
   selectedLoc.selected();
   selectedLoc.bounce();
   selectedLoc.openInfo();
-}
+  }
 
 }
 
 ko.applyBindings(new ViewModel());
+
+// http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
+// http://opensoul.org/2011/06/23/live-search-with-knockoutjs/
