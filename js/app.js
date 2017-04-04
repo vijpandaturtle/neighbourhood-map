@@ -82,19 +82,33 @@ var Place = function(data) {
 
 var ViewModel = function() {
   var self = this;
-  this.locs = ko.observableArray(Locations);
+  this.locs = ko.observableArray([]);
   this.currentLocation = ko.observable("");
   this.query = ko.observable("");
 
+  locations.forEach(function(locItem) {
+      self.locs.push(new Place(locItem));
+    });
+
+  this.currentLocation = ko.observable(this.locs()[0]);
+
   this.filterLocations = ko.computed(function() {
-    var query = self.query().toLowerCase();
-    console.log(query);
-    if (!query) {
-      return self.locs();
-    } else {
-      return [];
-    }
-  });
+      console.log(query);
+      if (!query) {
+        return self.locs();
+      } else {
+        return [];
+      } else  {
+        return ko.utils.arrayFilter(self.locs(),function(locs) {
+          return ko.utils.stringStartsWith(locs.name().toLowerCase(), query);
+        });
+      }
+    });
+    },this);
+
+  this.setCurrentLocation = function(clickedLoc) {
+      self.currentLocation(clickedLoc);
+  }
 
  this.currentShow = function(selectedLoc) {
   selectedLoc.selected();
