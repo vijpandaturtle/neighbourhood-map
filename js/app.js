@@ -20,7 +20,7 @@ infowindow = new google.maps.InfoWindow();
 
 //This data is taken from the google maps apis course by Udacity.
 //This is the model containing all the data in the MVVM pattern.
-var Locations = [
+var locations = [
         {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
         {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
         {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
