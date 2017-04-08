@@ -8,33 +8,27 @@ function initMap() {
   zoom: 13,
 });
 infowindow = new google.maps.InfoWindow();
+ko.applyBindings(new ViewModel());
 }
 
-//function AjaxRequest() {
-  //var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json';
+function ajaxRequestData() {
+  var foursquareUrl = "https://api.foursquare.com/v2/venues/search?client_id=AYDF0KKIFOA4SPMINSUXZWVJXP23OJYCYRPVOAV1HOK4LLRL&client_secret=M32BTG24T3GYTNGFKKZ5HEAG4XAE2BJ50LRYDE30VED5VODO&v=20130815&ll=20,76&query=pizza";
+   $.ajax({
+    url: foursquareUrl;
+    success : function(receive) {
+     console.log(receive);
+    }
+  })
+}
 
-  //$ajax({
-
-  //});
-//}
-
-//This data is taken from the google maps apis course by Udacity.
-//This is the model containing all the data in the MVVM pattern.
-var locations = [
-        {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
-        {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-        {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
-        {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-        {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
-        {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
-];
+ajaxRequestData();
 
 // This represents the view in the MVVM pattern.
 var Place = function(data) {
  var self = this;
  this.name = ko.observable(data.title);
- this.address = ko.observable(data.address);
- this.phone = ko.observable(data.phone);
+ // this.address = ko.observable(data.address);
+ // this.phone = ko.observable(data.phone);
  this.latitude = ko.observable(data.location.lat);
  this.longitude = ko.observable(data.location.lng);
 
@@ -51,7 +45,7 @@ var Place = function(data) {
   this.marker = new google.maps.Marker({
     position: new google.maps.LatLng(this.latitude,this.longitude),
     map: map,
-    title: title,
+    title: this.name,
     icon: originalMarker,
     animation : google.maps.Animation.DROP,
    });
@@ -82,23 +76,18 @@ var Place = function(data) {
 
 var ViewModel = function() {
   var self = this;
-  this.locs = ko.observableArray([]);
+  this.locs = ko.observableArray(locations);
   this.currentLocation = ko.observable("");
   this.query = ko.observable("");
 
-  locations.forEach(function(locItem) {
-      self.locs.push(new Place(locItem));
-    });
-
-  this.currentLocation = ko.observable(this.locs()[0]);
-
   this.filterLocations = ko.computed(function() {
+    var query = self.query().toLowerCase();
       console.log(query);
       if (!query) {
         return self.locs();
       } else  {
         return ko.utils.arrayFilter(self.locs(),function(locs) {
-          return ko.utils.stringStartsWith(locs.name().toLowerCase(), query);
+          return ko.utils.stringStartsWith(locs.title().toLowerCase(), query);
         });
       }
     },this);
@@ -114,5 +103,3 @@ var ViewModel = function() {
 }
 
 }
-
-ko.applyBindings(new ViewModel());
