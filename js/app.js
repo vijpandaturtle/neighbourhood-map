@@ -4,33 +4,54 @@ var InfoWindow;// Instead of using multiple infowindows we can just use one sinc
 // This is the constructor function for the map.
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-  center : {lat: 40.7413549, lng: -73.9980244},
+  center : {lat: 19.0176, lng: 72.8562},
   zoom: 13,
 });
 infowindow = new google.maps.InfoWindow();
-ko.applyBindings(new ViewModel());
+ko.applyBindings(viewModel);
 }
 
+// Function for retrieving data from foursquare API
 function ajaxRequestData() {
-  var foursquareUrl = "https://api.foursquare.com/v2/venues/search?client_id=AYDF0KKIFOA4SPMINSUXZWVJXP23OJYCYRPVOAV1HOK4LLRL&client_secret=M32BTG24T3GYTNGFKKZ5HEAG4XAE2BJ50LRYDE30VED5VODO&v=20130815&ll=20,76&query=pizza";
+  var foursquareUrl = "https://api.foursquare.com/v2/venues/search?client_id=AYDF0KKIFOA4SPMINSUXZWVJXP23OJYCYRPVOAV1HOK4LLRL&client_secret=M32BTG24T3GYTNGFKKZ5HEAG4XAE2BJ50LRYDE30VED5VODO&v=20130815&ll=19.0176,72.8562&query=pizza";
    $.ajax({
-    url: foursquareUrl;
-    success : function(receive) {
-     console.log(receive);
+    url: foursquareUrl,
+    // The success method defines the procedure to be followed when the ajax request is successful
+    success : function(receivedData) {
+    var placeItem = receivedData.response.venues;
+    placeItem.forEach(function(place) {
+      viewModel.locs.push(new Place(place));
+    });
+    console.log(placeItem);
+    },
+    // Error handling method for ajax request
+    error : function(jqXHR, textStatus, errorThrown) {
+      window.alert("An error occured, please press Ctrl+Shift+I for more details");
+      console.log("jqXHR:" + jqXHR);
+      console.log("TextStatus:" + textStatus);
+      console.log("ErrorThrown:" + errorThrown);
     }
   })
 }
 
 ajaxRequestData();
 
+// Error handling for google maps apis
+function errorHandler() {
+  var errorMessage = '<h2>Sorry, Google Maps is not working</h2>';
+  console.log(errorMessage);
+  $('#map').append(errorMessage);
+}
+
 // This represents the view in the MVVM pattern.
 var Place = function(data) {
  var self = this;
- this.name = ko.observable(data.title);
- // this.address = ko.observable(data.address);
- // this.phone = ko.observable(data.phone);
- this.latitude = ko.observable(data.location.lat);
- this.longitude = ko.observable(data.location.lng);
+ this.name = ko.observable(data.name);
+ this.address = ko.observable(data.location.address);
+ this.phone = ko.observable(data.contact.formattedPhone);
+ this.pincode = ko.observable(data.location.labeledLatLngs.postalCode);
+ this.latitude = ko.observable(data.location.labeledLatLngs.lat);
+ this.longitude = ko.observable(data.location.labeledLatLngs.lng);
 
  var originalMarker = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "FE7569",
     new google.maps.Size(21, 34),
@@ -76,7 +97,7 @@ var Place = function(data) {
 
 var ViewModel = function() {
   var self = this;
-  this.locs = ko.observableArray(locations);
+  this.locs = ko.observableArray([]);
   this.currentLocation = ko.observable("");
   this.query = ko.observable("");
 
@@ -103,3 +124,6 @@ var ViewModel = function() {
 }
 
 }
+
+// Here I created a new instance of the class ViewModel to access its properties and methods directly
+var viewModel = new ViewModel();
