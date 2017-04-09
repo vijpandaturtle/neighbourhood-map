@@ -19,10 +19,10 @@ function ajaxRequestData() {
     // The success method defines the procedure to be followed when the ajax request is successful
     success : function(receivedData) {
     var placeItem = receivedData.response.venues;
-    placeItem.forEach(function(place) {
-      viewModel.locs.push(new Place(place));
-    });
-    console.log(placeItem);
+  //  placeItem.forEach(function(place) {
+    //  viewModel.locs.push(new Place(place));
+  //}
+    //console.log(placeItem);
     },
     // Error handling method for ajax request
     error : function(jqXHR, textStatus, errorThrown) {
@@ -31,7 +31,7 @@ function ajaxRequestData() {
       console.log("TextStatus:" + textStatus);
       console.log("ErrorThrown:" + errorThrown);
     }
-  })
+  });
 }
 
 ajaxRequestData();
