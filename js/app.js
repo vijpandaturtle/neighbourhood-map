@@ -12,17 +12,17 @@ ko.applyBindings(viewModel);
 }
 
 // Function for retrieving data from foursquare API
-function ajaxRequestData() {
+function ajaxRequestData(data) {
   var foursquareUrl = "https://api.foursquare.com/v2/venues/search?client_id=AYDF0KKIFOA4SPMINSUXZWVJXP23OJYCYRPVOAV1HOK4LLRL&client_secret=M32BTG24T3GYTNGFKKZ5HEAG4XAE2BJ50LRYDE30VED5VODO&v=20130815&ll=19.0176,72.8562&query=pizza";
+  // Initialize the parameter data as an array
    $.ajax({
     url: foursquareUrl,
     // The success method defines the procedure to be followed when the ajax request is successful
     success : function(receivedData) {
     var placeItem = receivedData.response.venues;
-  //  placeItem.forEach(function(place) {
-    //  viewModel.locs.push(new Place(place));
-  //}
-    //console.log(placeItem);
+     placeItem.forEach(function(venue) {
+        data.push(new Place(venue));
+     });
     },
     // Error handling method for ajax request
     error : function(jqXHR, textStatus, errorThrown) {
@@ -33,8 +33,6 @@ function ajaxRequestData() {
     }
   });
 }
-
-ajaxRequestData();
 
 // Error handling for google maps apis
 function errorHandler() {
@@ -98,6 +96,7 @@ var Place = function(data) {
 var ViewModel = function() {
   var self = this;
   this.locs = ko.observableArray([]);
+  ajaxRequestData(this.locs);
   this.currentLocation = ko.observable("");
   this.query = ko.observable("");
 
