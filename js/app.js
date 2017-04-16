@@ -45,11 +45,11 @@ function errorHandler() {
 var Place = function(data) {
  var self = this;
  this.name = ko.observable(data.name);
- this.address = ko.observable(data.location.address);
- this.phone = ko.observable(data.contact.formattedPhone);
- this.pincode = ko.observable(data.location.labeledLatLngs.postalCode);
- this.latitude = ko.observable(data.location.labeledLatLngs.lat);
- this.longitude = ko.observable(data.location.labeledLatLngs.lng);
+ this.address = data.location.address;
+ this.phone = data.contact.formattedPhone;
+ this.pincode = data.location.labeledLatLngs.postalCode;
+ this.latitude = data.location.labeledLatLngs.lat;
+ this.longitude = data.location.labeledLatLngs.lng;
 
  var originalMarker = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "FE7569",
     new google.maps.Size(21, 34),
@@ -64,7 +64,7 @@ var Place = function(data) {
   this.marker = new google.maps.Marker({
     position: new google.maps.LatLng(this.latitude,this.longitude),
     map: map,
-    title: this.name,
+    title: this.name(),
     icon: originalMarker,
     animation : google.maps.Animation.DROP,
    });
@@ -99,7 +99,6 @@ var ViewModel = function() {
   ajaxRequestData(this.locs);
   this.currentLocation = ko.observable("");
   this.query = ko.observable("");
-
   this.filterLocations = ko.computed(function() {
     var query = self.query().toLowerCase();
       console.log(query);
@@ -107,7 +106,7 @@ var ViewModel = function() {
         return self.locs();
       } else  {
         return ko.utils.arrayFilter(self.locs(),function(locs) {
-          return ko.utils.stringStartsWith(locs.title().toLowerCase(), query);
+          return ko.utils.stringStartsWith(locs.name().toLowerCase(), query);
         });
       }
     },this);
@@ -122,6 +121,19 @@ var ViewModel = function() {
   selectedLoc.openInfo();
 }
 
+var markers = [];
+for (i=0; i<this.locs().length; i++) {
+
+var position = this.locs()[i].location.labeledLatLngs;
+var title = this.locs()[i].name;
+
+var marker = new google.maps.Marker({
+  position: position,
+  map:map,
+  title:title
+});
+markers.push(marker);
+}
 }
 
 // Here I created a new instance of the class ViewModel to access its properties and methods directly

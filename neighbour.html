@@ -41,7 +41,9 @@
             </div>
             <div class="modal-body">
              <ul class="search-ac" data-bind="foreach:filterLocations">
-                <li data-bind="text : title"></li>
+                <li data-bind="text : name">
+                  <li data-bind="text : address"></li>
+                </li>
                 <hr>
               </ul>
             </div>
