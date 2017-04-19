@@ -48,8 +48,8 @@ var Place = function(data) {
  this.address = data.location.address;
  this.phone = data.contact.formattedPhone;
  this.pincode = data.location.labeledLatLngs.postalCode;
- this.latitude = data.location.labeledLatLngs.lat;
- this.longitude = data.location.labeledLatLngs.lng;
+ this.latitude = data.location.lat;
+ this.longitude = data.location.lng;
 
  var originalMarker = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "FE7569",
     new google.maps.Size(21, 34),
@@ -101,12 +101,12 @@ var ViewModel = function() {
   this.query = ko.observable("");
   this.filterLocations = ko.computed(function() {
     var query = self.query().toLowerCase();
-      console.log(query);
       if (!query) {
         return self.locs();
       } else  {
-        return ko.utils.arrayFilter(self.locs(),function(locs) {
-          return ko.utils.stringStartsWith(locs.name().toLowerCase(), query);
+        return ko.utils.arrayFilter(self.locs().Place ,function(loc) {
+           var match = loc.name.toLowerCase().indexOf(query) !=  -1;
+            return match;
         });
       }
     },this);
@@ -121,18 +121,10 @@ var ViewModel = function() {
   selectedLoc.openInfo();
 }
 
-var markers = [];
 for (i=0; i<this.locs().length; i++) {
-
-var position = this.locs()[i].location.labeledLatLngs;
-var title = this.locs()[i].name;
-
-var marker = new google.maps.Marker({
-  position: position,
-  map:map,
-  title:title
-});
-markers.push(marker);
+// This is the separate for loop to handle displaying of the markers when the page loads.
+var position = this.locs()[i].Place.location.labeledLatLngs;
+var title = this.locs()[i].Place.name;
 }
 }
 
