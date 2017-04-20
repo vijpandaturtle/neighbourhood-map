@@ -16,16 +16,15 @@
   <title>Neighbourhood Map
   </title>
   <body>
-    <div class="navbar navbar-inverse">
+    <div class="navbar navbar-default">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand" href="#">My Neighbourhood Map</a>
-        </div>
+          <a class="brand" href="#"> Neighbourhood Map : Pizzeria &#127829</a>
+          <div class="button"><button class="btn btn-info filter" data-toggle="modal" data-target="#myModal">EXPLORE PIZZA PLACES
+          </button></div>
+          </div>
       </div>
     </div>
-    <div class="button">
-      <button class="btn btn-lg filter" data-toggle="modal" data-target="#myModal">CLICK HERE FOR MORE !!
-      </button>
       <div class="modal fade" id="myModal" tabindex="-1" role ="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -36,7 +35,7 @@
               <h2 class="modal-title" id="myModalLabel">Locations
               </h2>
               <p class="input-option">
-                <input placeholder="Search…" type="search" data-bind="textInput = query" autocomplete="off">
+                <input placeholder="Search…" type="search" data-bind="textInput: query" autocomplete="off">
               </p>
             </div>
             <div class="modal-body">
@@ -48,7 +47,7 @@
               </ul>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-warning">
+              <button type="button" class="btn btn-success" data-bind="click: $parent.default">
                 Display All
               </button>
             </div>

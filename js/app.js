@@ -5,7 +5,7 @@ var InfoWindow;// Instead of using multiple infowindows we can just use one sinc
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
   center : {lat: 19.0176, lng: 72.8562},
-  zoom: 13,
+  zoom: 12,
 });
 infowindow = new google.maps.InfoWindow();
 ko.applyBindings(viewModel);
@@ -44,10 +44,11 @@ function errorHandler() {
 // This represents the view in the MVVM pattern.
 var Place = function(data) {
  var self = this;
- this.name = ko.observable(data.name);
- this.address = data.location.address;
- this.phone = data.contact.formattedPhone;
- this.pincode = data.location.labeledLatLngs.postalCode;
+ this.name = data.name;
+ // Just adding an OR operator can handle the situation when data in a certain is missing.
+ this.address = data.location.formattedAddress || "Sorry we don't have the info at the time";
+ this.phone = data.contact.formattedPhone || "Sorry we don't have the info at the time";
+ this.pincode = data.location.postalCode || "Sorry we don't have the info at the time";
  this.latitude = data.location.lat;
  this.longitude = data.location.lng;
 
@@ -64,32 +65,32 @@ var Place = function(data) {
   this.marker = new google.maps.Marker({
     position: new google.maps.LatLng(this.latitude,this.longitude),
     map: map,
-    title: this.name(),
+    title: this.name,
     icon: originalMarker,
     animation : google.maps.Animation.DROP,
    });
 
    this.marker.addListener('click', function() {
+    self.marker.setIcon(newMarker);
     self.openInfo();
     self.bounce();
     });
 
   this.openInfo = function() {
      infowindow.open(map,this.marker);
-     infowindow.setContent('<div>' + marker.title + '</div>');
+     infowindow.setContent('<div>' + this.name + '</div>' +
+                            '<div>' + this.address + '</div>' +
+                            '<div>' + this.phone + '</div>' +
+                             '<div>' + this.pincode + '</div>');
     }
 
   this.bounce = function() {
     this.marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
     this.marker.setAnimation(null);
-  },5000);
+   },5000);
   }
 
-  this.selected = function() {
-    this.marker.setIcon(newMarker);
-    this.marker.setVisible(True);
-  }
 }
 
 
@@ -104,28 +105,21 @@ var ViewModel = function() {
       if (!query) {
         return self.locs();
       } else  {
-        return ko.utils.arrayFilter(self.locs().Place ,function(loc) {
+        return ko.utils.arrayFilter(self.locs() ,function(loc) {
            var match = loc.name.toLowerCase().indexOf(query) !=  -1;
-            return match;
+           loc.marker.setVisible(match);
+           return match;
         });
       }
     },this);
 
-  this.setCurrentLocation = function(clickedLoc) {
-      self.currentLocation(clickedLoc);
+   this.default = function() {
+   for (i=0; i<this.locs().length; i++) {
+   // This is the separate for loop to handle displaying of the markers when the page loads.
+   var position = this.locs()[i].Place.location.labeledLatLngs;
+   var title = this.locs()[i].Place.name;
+   }
   }
-
- this.currentShow = function(selectedLoc) {
-  selectedLoc.selected();
-  selectedLoc.bounce();
-  selectedLoc.openInfo();
-}
-
-for (i=0; i<this.locs().length; i++) {
-// This is the separate for loop to handle displaying of the markers when the page loads.
-var position = this.locs()[i].Place.location.labeledLatLngs;
-var title = this.locs()[i].Place.name;
-}
 }
 
 // Here I created a new instance of the class ViewModel to access its properties and methods directly
