@@ -39,8 +39,8 @@
               </p>
             </div>
             <div class="modal-body">
-             <ul class="search-ac" data-bind="foreach:filterLocations , click : $root.marker">
-                <li data-bind="text : name">
+             <ul class="search-ac" data-bind="foreach:filterLocations , click : $root.setCurrent">
+                 <li data-bind="text : name">
                   <li data-bind="text : address"></li>
                 </li>
                 <hr>

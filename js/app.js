@@ -319,6 +319,11 @@ var ViewModel = function() {
         }
     }, this);
 
+    this.setCurrent = function(clickedLocation) {
+      self.currentLocation(clickedLocation);
+      clickedLocation.marker.setVisible(true);
+    };
+
     this.default = function() {
         for (i = 0; i < this.locs().length; i++) {
             // This is the separate for loop to handle displaying of the markers when the page loads.
