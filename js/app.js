@@ -1,5 +1,4 @@
 var map; // Global variable used for initializing the map object.
-var InfoWindow; // Instead of using multiple infowindows we can just use one since it is unncessary in this situation.
 
 // This is the constructor function for the map.
 function initMap() {
@@ -209,6 +208,7 @@ function initMap() {
             }
         ]
     });
+    // Instead of using multiple infowindows we can just use one since it is unncessary in this situation.
     infowindow = new google.maps.InfoWindow();
     ko.applyBindings(viewModel);
 }
