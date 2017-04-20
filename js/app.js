@@ -238,8 +238,8 @@ function ajaxRequestData(data) {
 
 // Error handling for google maps apis
 function errorHandler() {
-    var errorMessage = '<h2>Sorry, Google Maps is not working</h2>';
-    console.log(errorMessage);
+    var errorMessage = '<h3>Sorry, Google Maps is not working</h3>';
+    console.log("Google Maps isn't working");
     $('#map').append(errorMessage);
 }
 
@@ -288,6 +288,9 @@ var Place = function(data) {
 
     this.bounce = function() {
         this.marker.setAnimation(google.maps.Animation.BOUNCE);
+      /*  window.setTimeout(function() {
+          this.marker.setAnimation(null);
+        }, 700);*/
     };
 
 };
@@ -301,8 +304,12 @@ var ViewModel = function() {
     this.query = ko.observable("");
     this.filterLocations = ko.computed(function() {
         var query = self.query().toLowerCase();
-        if (!query) {
-            return self.locs();
+        if (!query || query == "") {
+          // Displays all locations and markers when the input box is empty
+          for (var i=0; i<self.locs().length; i++) {
+            self.locs()[i].marker.setVisible(true);
+          }
+          return self.locs();
         } else {
             return ko.utils.arrayFilter(self.locs(), function(loc) {
                 var match = loc.name.toLowerCase().indexOf(query) != -1;

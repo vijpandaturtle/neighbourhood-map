@@ -39,7 +39,7 @@
               </p>
             </div>
             <div class="modal-body">
-             <ul class="search-ac" data-bind="foreach:filterLocations">
+             <ul class="search-ac" data-bind="foreach:filterLocations , click : $root.marker">
                 <li data-bind="text : name">
                   <li data-bind="text : address"></li>
                 </li>
@@ -57,9 +57,9 @@
     </div>
     <div id="map">
     </div>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMrECZJcFbeOtbvyVyPKeJlT27hEwRBz0&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMrECZJcFbeOtbvyVyPKeJlT27hEwRBz0&callback=initMap" onerror="errorHandler()">
     </script>
     <script src="js/app.js">
     </script>
-  </body>
+    </body>
 </html>
