@@ -35,9 +35,10 @@
       <input placeholder="Search…" type="search" data-bind="textInput: query" autocomplete="off">
     </p>
    <div class="list-view pre-scrollable">
-     <ul class="search-ac" data-bind="foreach:filterLocations , click : $root.setCurrent">
-         <li data-bind="text : name">
-          <li data-bind="text : address"></li>
+     <ul class="search-ac" data-bind="foreach:filterLocations">
+         <li data-bind="click : $root.listClick">
+           <span data-bind="text :name"></span>
+           <li data-bind="text : address"></li>
         </li>
         <hr>
       </ul>
@@ -49,7 +50,7 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMrECZJcFbeOtbvyVyPKeJlT27hEwRBz0&callback=initMap" onerror="errorHandler()">
     </script>
     <footer>
-      <div class="foot-note">Powered By Foursquare and Google Maps APIs</div>
+      <div class="foot-note">Powered By Foursquare API</div>
     </footer>
     </body>
 </html>

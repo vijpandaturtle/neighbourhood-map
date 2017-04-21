@@ -321,9 +321,8 @@ var ViewModel = function() {
         }
     }, this);
 
-    this.setCurrent = function(clickedLocation) {
-      self.currentLocation(clickedLocation);
-      clickedLocation.marker.setVisible(true);
+    this.listClick = function() {
+       google.map.event.trigger(this, 'click');
     };
 
     this.default = function() {
