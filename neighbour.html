@@ -19,38 +19,45 @@
     <div class="navbar navbar-default">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand" href="#"> Neighbourhood Map : Pizzeria &#127829</a>
-          <div class="button"><a class="btn btn-info filter button-title" href="#info">EXPLORE PIZZA PLACES
-          </a></div>
+          <a class="brand" href="#"> Neighbourhood Map : Pizzeria &#127829
+          </a>
+          <div class="button">
+            <a class="btn btn-info filter button-title" href="#info">EXPLORE PIZZA PLACES
+            </a>
           </div>
-          </div>
+        </div>
+      </div>
     </div>
     </div>
-    <div id="map">
-    </div>
-    <section>
-    <div class="list-search-info" id="info">
-    <h2>Locations</h2>
-    <p class="input-option">
-      <input placeholder="Search…" type="search" data-bind="textInput: query" autocomplete="off">
-    </p>
-   <div class="list-view pre-scrollable">
-     <ul class="search-ac" data-bind="foreach:filterLocations">
-         <li data-bind="click : $root.listClick">
-           <span data-bind="text :name"></span>
-           <li data-bind="text : address"></li>
-        </li>
-        <hr>
-      </ul>
+  <div id="map">
   </div>
+  <section>
+    <div class="list-search-info" id="info">
+      <h2>Locations
+      </h2>
+      <p class="input-option">
+        <input placeholder="Search…" type="search" data-bind="textInput: query" autocomplete="off">
+      </p>
+      <div class="list-view pre-scrollable">
+        <ul class="search-ac" data-bind="foreach:filterLocations">
+          <li data-bind="click : $root.listClick">
+            <span data-bind="text :name">
+            </span>
+          <li data-bind="text : address">
+          </li>
+          </li>
+        <hr>
+        </ul>
+    </div>
     </div>
   </section>
-    <script src="js/app.js">
-    </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMrECZJcFbeOtbvyVyPKeJlT27hEwRBz0&callback=initMap" onerror="errorHandler()">
-    </script>
-    <footer>
-      <div class="foot-note">Powered By Foursquare API</div>
-    </footer>
-    </body>
+<script src="js/app.js">
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMrECZJcFbeOtbvyVyPKeJlT27hEwRBz0&callback=initMap" onerror="errorHandler()">
+</script>
+<footer>
+  <div class="foot-note">Powered By Foursquare API
+  </div>
+</footer>
+</body>
 </html>

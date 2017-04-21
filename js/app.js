@@ -289,16 +289,16 @@ var Place = function(data) {
     this.bounce = function() {
         this.marker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function() {
-        self.marker.setAnimation(null);
-        self.marker.setIcon(originalMarker);
-      }, 4000);
+            self.marker.setAnimation(null);
+            self.marker.setIcon(originalMarker);
+        }, 4000);
     };
 
 };
 
 
 var ViewModel = function() {
-   // This is a simple trick that helps keep track of the scope of keyword this. Self means it belongs to the viewModel scope.
+    // This is a simple trick that helps keep track of the scope of keyword this. Self means it belongs to the viewModel scope.
     var self = this;
     this.locs = ko.observableArray([]);
     ajaxRequestData(this.locs);
@@ -306,12 +306,12 @@ var ViewModel = function() {
     this.query = ko.observable("");
     this.filterLocations = ko.computed(function() {
         var query = self.query().toLowerCase();
-        if (!query || query == "") {
-          // Displays all locations and markers when the input box is empty
-          for (var i=0; i<self.locs().length; i++) {
-            self.locs()[i].marker.setVisible(true);
-          }
-          return self.locs();
+        if (!query || query === "") {
+            // Displays all locations and markers when the input box is empty
+            for (var i = 0; i < self.locs().length; i++) {
+                self.locs()[i].marker.setVisible(true);
+            }
+            return self.locs();
         } else {
             return ko.utils.arrayFilter(self.locs(), function(loc) {
                 var match = loc.name.toLowerCase().indexOf(query) != -1;
@@ -322,7 +322,7 @@ var ViewModel = function() {
     }, this);
 
     this.listClick = function() {
-       google.map.event.trigger(this, 'click');
+        google.maps.event.trigger(this.marker, 'click');
     };
 
     this.default = function() {
