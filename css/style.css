@@ -24,3 +24,8 @@ html,body {
 ul {
   list-style-type: none;
 }
+
+.foot-note {
+  color: grey;
+  padding: 5px 0px 5px 10px;
+}
