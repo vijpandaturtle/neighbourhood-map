@@ -288,15 +288,17 @@ var Place = function(data) {
 
     this.bounce = function() {
         this.marker.setAnimation(google.maps.Animation.BOUNCE);
-      /*  window.setTimeout(function() {
-          this.marker.setAnimation(null);
-        }, 700);*/
+        setTimeout(function() {
+        self.marker.setAnimation(null);
+        self.marker.setIcon(originalMarker);
+      }, 4000);
     };
 
 };
 
 
 var ViewModel = function() {
+   // This is a simple trick that helps keep track of the scope of keyword this. Self means it belongs to the viewModel scope.
     var self = this;
     this.locs = ko.observableArray([]);
     ajaxRequestData(this.locs);
