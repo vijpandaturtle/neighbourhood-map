@@ -4,8 +4,8 @@ var map; // Global variable used for initializing the map object.
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: {
-            lat: 19.0176,
-            lng: 72.8562
+            lat: 19.0276,
+            lng: 72.8662
         },
         zoom: 12,
         styles: [{
